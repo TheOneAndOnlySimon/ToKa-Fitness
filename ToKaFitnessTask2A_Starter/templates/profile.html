@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h1>Your profile</h1>
+<section class="panel">
+  <h2>{{ user.username }}</h2>
+  <p>{{ user.email }}</p>
+  <p>Membership: <strong>{{ user.membership_status }}</strong></p>
+  <p>Points balance: <strong>{{ points }}</strong></p>
+  <p>Demo points action (not linked to a verified workout):</p>
+  <a class="button" href="{{ url_for('demo_complete', id='demo-session-001') }}">Award demo points once</a>
+</section>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ guide.title }}{% endblock %}
+{% block content %}
+<article class="panel article">
+  <span class="tag">{{ guide.category }} · {{ guide.access_level }} content</span>
+  <h1>{{ guide.title }}</h1>
+  <p class="lead">{{ guide.summary }}</p>
+  <p>{{ guide.body }}</p>
+  <hr>
+  <h2>Source and review</h2>
+  <p>{{ guide.source or "Source details to be added by ToKa staff." }}</p>
+  <p class="notice">General information only. Stop if you experience pain or feel unwell. Seek advice from a suitably qualified professional where appropriate.</p>
+  <a href="{{ url_for('resources') }}">← Back to resources</a>
+</article>
+{% endblock %}

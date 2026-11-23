@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Community{% endblock %}
+{% block content %}
+<h1>ToKa Community</h1>
+<p>Share a training update or encourage another member. Do not post private medical or personal information.</p>
+<form class="panel form-stack" method="post">
+  <label for="body">Your post (maximum 500 characters)</label>
+  <textarea id="body" name="body" maxlength="500" rows="3" required></textarea>
+  <button type="submit">Share post</button>
+</form>
+<section class="section">
+  <h2>Recent posts</h2>
+  {% for post in posts %}
+  <article class="card post">
+    <p><strong>{{ post.username }}</strong> <small>{{ post.created_at }}</small></p>
+    <p class="preserve">{{ post.body }}</p>
+    <form method="post" action="{{ url_for('report_post', post_id=post.id) }}">
+      <button class="button secondary" type="submit">Report post</button>
+    </form>
+  </article>
+  {% else %}<p class="panel">No posts yet. Start the conversation.</p>{% endfor %}
+</section>
+{% endblock %}

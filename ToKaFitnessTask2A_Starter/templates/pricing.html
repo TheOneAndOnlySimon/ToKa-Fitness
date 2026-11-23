@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Pricing{% endblock %}
+{% block content %}
+<h1>Choose your access</h1>
+<p>Example membership layout. The client must confirm prices, benefits and cancellation terms.</p>
+<div class="grid two">
+  <section class="panel">
+    <h2>Free</h2><p class="price">£0</p>
+    <ul><li>Free guides and advice</li><li>Browse ToKa resources</li><li>Create an account</li></ul>
+    <p>New accounts start with free access.</p>
+  </section>
+  <section class="panel">
+    <h2>ToKa Member</h2><p class="price">Price to be confirmed</p>
+    <ul><li>Access to member-only guides</li><li>Additional digital content</li><li>More features planned</li></ul>
+    {% if session.get('user_id') %}
+    <form method="post" action="{{ url_for('upgrade_demo') }}">
+      <button type="submit">Activate demo membership</button>
+    </form>
+    <small>Prototype only: this button does not take payment.</small>
+    {% else %}<a class="button" href="{{ url_for('register') }}">Register to explore</a>{% endif %}
+  </section>
+</div>
+{% endblock %}

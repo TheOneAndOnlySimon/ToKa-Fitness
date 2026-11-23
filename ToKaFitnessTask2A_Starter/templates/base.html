@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ToKa Online{% endblock %} | ToKa Fitness</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="access-tools" aria-label="Accessibility controls">
+    <button type="button" id="text-smaller">A− Text size</button>
+    <button type="button" id="text-larger">A+ Text size</button>
+    <button type="button" id="contrast-toggle" aria-pressed="false">High contrast</button>
+  </div>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('home') }}">ToKa <span>Online</span></a>
+    <p>Fitness guidance. Healthy habits. Your progress.</p>
+  </header>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="{{ url_for('home') }}">Dashboard</a>
+    <a href="{{ url_for('resources') }}">Resources</a>
+    <a href="{{ url_for('plans') }}">My Plans</a>
+    <a href="{{ url_for('community') }}">Community</a>
+    <a href="{{ url_for('pricing') }}">Pricing</a>
+    <a href="{{ url_for('contact') }}">Contact Us</a>
+    {% if session.get('user_id') %}
+      <a href="{{ url_for('profile') }}">Profile</a>
+      <a href="{{ url_for('logout') }}">Log out</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Sign in</a>
+      <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+  </nav>
+  <main id="main" class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="messages" aria-label="Notifications" aria-live="polite">
+          {% for category, message in messages %}
+            <p class="message {{ category }}"><strong>{{ category|capitalize }}:</strong> {{ message }}</p>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <p>ToKa Fitness · Prototype for Task 2A</p>
+    <p><a href="{{ url_for('contact') }}">Contact</a> · Privacy notice and accessibility statement to be added</p>
+    <small>Fitness information is general guidance and is not a substitute for medical advice or supervised training.</small>
+  </footer>
+</body>
+</html>

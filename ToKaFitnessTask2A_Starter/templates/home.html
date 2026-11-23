@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome panel">
+  <p class="eyebrow">TO YOUR NEXT GOAL</p>
+  <h1>{% if user %}Welcome back, {{ user.username }}{% else %}Build healthy habits with ToKa{% endif %}</h1>
+  <p>Explore practical fitness guidance, plan your week and keep track of your progress.</p>
+  {% if not user %}<a class="button" href="{{ url_for('register') }}">Create a free account</a>{% else %}<a class="button" href="{{ url_for('plans') }}">Open my plans</a>{% endif %}
+</section>
+<div class="grid two">
+  <section class="panel">
+    <h2>Explore our guides</h2>
+    <p>Browse free advice about training and healthy living.</p>
+    <a href="{{ url_for('resources') }}">View all resources →</a>
+  </section>
+  <section class="panel">
+    <h2>Custom plans</h2>
+    <p>Create a workout or eating plan and save it to your account.</p>
+    <a href="{{ url_for('plans') }}">Build a plan →</a>
+  </section>
+  <section class="panel">
+    <h2>From the community</h2>
+    <p>Share progress and encourage other ToKa users.</p>
+    <a href="{{ url_for('community') }}">Visit community →</a>
+  </section>
+  <section class="panel">
+    <h2>Membership</h2>
+    <p>Compare free and member access.</p>
+    <a href="{{ url_for('pricing') }}">View pricing →</a>
+  </section>
+</div>
+<section class="section">
+  <h2>Featured free guides</h2>
+  <div class="grid three">
+    {% for guide in guides %}
+      <article class="card">
+        <span class="tag">{{ guide.category }}</span>
+        <h3>{{ guide.title }}</h3>
+        <p>{{ guide.summary }}</p>
+        <a href="{{ url_for('guide', content_id=guide.id) }}">Read guide →</a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}My Plans{% endblock %}
+{% block content %}
+<h1>My custom plans</h1>
+<p>Create a basic workout or eating plan. You can edit the details later by deleting and recreating the plan in this starter.</p>
+<form class="panel form-stack" method="post">
+  <h2>Create a plan</h2>
+  <label for="title">Plan name</label>
+  <input id="title" name="title" maxlength="100" required placeholder="e.g. My weekly routine">
+  <label for="plan_type">Plan type</label>
+  <select id="plan_type" name="plan_type" required>
+    <option value="workout">Workout plan</option>
+    <option value="eating">Eating plan</option>
+  </select>
+  <label for="details">Plan details</label>
+  <textarea id="details" name="details" rows="5" required placeholder="Add exercises, meals, days or notes..."></textarea>
+  <button type="submit">Save plan</button>
+</form>
+<section class="section">
+  <h2>Saved plans</h2>
+  {% if plans %}
+    <div class="grid two">
+    {% for plan in plans %}
+      <article class="card">
+        <span class="tag">{{ plan.plan_type }} plan</span>
+        <h3>{{ plan.title }}</h3>
+        <p class="preserve">{{ plan.details }}</p>
+        <form method="post" action="{{ url_for('delete_plan', plan_id=plan.id) }}" onsubmit="return confirm('Delete this plan?')">
+          <button class="button danger" type="submit">Delete plan</button>
+        </form>
+      </article>
+    {% endfor %}
+    </div>
+  {% else %}<p class="panel">You have not saved any plans yet.</p>{% endif %}
+</section>
+{% endblock %}
