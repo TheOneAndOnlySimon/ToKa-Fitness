@@ -29,7 +29,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .text-size-display { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; min-height: 44px; padding: 0 10px; background: white; color: var(--navy); border: 2px solid var(--navy); border-radius: 4px; font-weight: bold; }
 .high-contrast .text-size-display { background: #000; color: #FFDD00; border-color: #FFDD00; }
 .site-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 80px; background: var(--green); border-bottom: 2px solid var(--navy); text-align: center; padding: 18px; }
-.brand { display: inline-block; font-size: 2rem; font-weight: 800; color: var(--navy); text-decoration: none; }
+.brand { display: inline-block; font-size: 1.75em; font-weight: 800; color: var(--navy); text-decoration: none; }
 .brand span { font-weight: 400; }
 .site-header p { margin: 2px 0; }
 .nav { background: var(--navy); display: flex; justify-content: center; flex-wrap: wrap; gap: 5px; padding: 10px; }
@@ -37,11 +37,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .nav a:hover, .nav a:focus-visible { background: white; color: var(--navy); border-color: var(--navy); }
 .container { max-width: 1200px; margin: 0 auto; padding: 24px 18px 42px; min-height: 55vh; }
 h1, h2, h3 { color: var(--navy); line-height: 1.2; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.45rem; }
+h1 { font-size: 1.75em; }
+h2 { font-size: 1.3em; }
 .panel, .card { background: var(--green); border: 2px solid var(--navy); border-radius: 8px; padding: 20px; }
 .welcome { padding: 30px; margin-bottom: 22px; }
-.eyebrow, .tag { font-size: .82rem; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; }
+.eyebrow, .tag { font-size: .75em; font-weight: bold; letter-spacing: .04em; text-transform: uppercase; }
 .tag { display: inline-block; background: white; border: 1px solid var(--navy); border-radius: 20px; padding: 3px 9px; }
 .grid { display: grid; gap: 16px; }
 .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -70,7 +70,7 @@ label { font-weight: bold; }
 .message.success { border-color: #176b2c; }
 .message.warning { border-color: #8a5b00; }
 .notice { border-left: 5px solid var(--navy); padding: 10px; background: white; }
-.price { font-size: 1.6rem; font-weight: bold; }
+.price { font-size: 1.4em; font-weight: bold; }
 .preserve { white-space: pre-wrap; overflow-wrap: anywhere; }
 .post { margin: 12px 0; }
 .site-footer { text-align: center; background: #fff; border-top: 2px solid var(--navy); padding: 22px; }

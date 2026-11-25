@@ -4,7 +4,7 @@ import os
 import secrets
 import sqlite3
 
-from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify, abort
+from flask import Flask, render_template, request, redirect, url_for, flash, session, abort
 from flask_wtf.csrf import CSRFProtect, CSRFError
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -338,7 +338,13 @@ def contact():
         flash("Example form submitted. Add a database table and staff inbox before using this for real enquiries.", "success")
     return render_template("contact.html")
 
-
+"""
+Award demonstration points for a completion reference.
+PROTOTYPE SHORTCUT (deliberate): this uses a GET link and trusts the
+reference in the URL, so points are not tied to a verified workout.
+Before launch it should be a POST request that checks the session
+was really completed.
+"""
 @app.route("/demo-complete")
 @login_required
 def demo_complete():
@@ -360,11 +366,15 @@ def demo_complete():
         db.close()
     return redirect(url_for("profile"))
 
-
+"""
+PROTOTYPE SHORTCUT (deliberate): any signed-in user can activate
+membership without paying, so the paid-guide check can be demonstrated.
+Before launch, replace this with a real payment provider and only
+activate membership after the payment is confirmed. 
+"""
 @app.route("/upgrade-demo", methods=["POST"])
 @login_required
 def upgrade_demo():
-    # this is just for the prototype...
     db = get_db()
     db.execute("UPDATE users SET membership_status='active' WHERE id=?", (session["user_id"],))
     db.commit()

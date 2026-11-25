@@ -8,20 +8,16 @@
   <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
     <a class="skip-link" href="#main">Skip to main content</a>
-
-      <header class="site-header">
+  <header class="site-header">
     <div class="access-tools" role="region" aria-label="Accessibility tools">
-          <div class="access-tools" role="region" aria-label="Accessibility tools">
       <button type="button" id="text-smaller" aria-label="Decrease text size">A−</button>
       <span id="text-size-display" class="text-size-display" aria-live="polite">100%</span>
       <button type="button" id="text-larger" aria-label="Increase text size">A+</button>
       <button type="button" id="contrast-toggle" aria-pressed="false">High contrast</button>
     </div>
-    </div>
     <a class="brand" href="{{ url_for('home') }}">ToKa <span>Online</span></a>
-      </header>
+  </header>
 
   <nav class="nav" aria-label="Main navigation">
     <a href="{{ url_for('home') }}">Dashboard</a>
@@ -51,7 +47,9 @@
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">
-
+      <footer class="site-footer">
+    <p>&copy; ToKa Fitness &middot; <a href="{{ url_for('privacy') }}">Privacy notice</a> &middot; <a href="{{ url_for('contact') }}">Contact us</a></p>
+  </footer>
   </footer>
 </body>
 </html>
