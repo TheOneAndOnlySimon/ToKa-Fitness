@@ -16,7 +16,8 @@
     <p><strong>{{ post.username }}</strong> <small>{{ post.created_at }}</small></p>
     <p class="preserve">{{ post.body }}</p>
     <form method="post" action="{{ url_for('report_post', post_id=post.id) }}">
-      <button class="button secondary" type="submit">Report post</button>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="button secondary" type="submit">Report post</button>
     </form>
   </article>
   {% else %}<p class="panel">No posts yet. Start the conversation.</p>{% endfor %}

@@ -278,7 +278,7 @@ def delete_plan(plan_id):
     db.execute("DELETE FROM plans WHERE id=? AND user_id=?", (plan_id, session["user_id"]))
     db.commit()
     db.close()
-    flash("Plan deleted if it belonged to your account.", "success")
+    flash("Plan deleted.", "success")
     return redirect(url_for("plans"))
 
 
