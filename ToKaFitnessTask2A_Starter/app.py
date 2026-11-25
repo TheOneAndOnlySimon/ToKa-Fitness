@@ -1,14 +1,31 @@
 from datetime import datetime, timedelta
 from functools import wraps
+import os
+import secrets
 import sqlite3
 
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify, abort
+from flask_wtf.csrf import CSRFProtect, CSRFError
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "change-this-development-key"
+# The secret key signs the session cookie, so it must never be hardcoded in the source.
+# Set TOKA_SECRET_KEY in the environment for a stable key; otherwise a random one is
+# generated each time the app starts (users are simply signed out after a restart).
+app.config["SECRET_KEY"] = os.environ.get("TOKA_SECRET_KEY") or secrets.token_hex(32)
 app.config["DATABASE"] = "toka_fitness.db"
+app.config["SESSION_COOKIE_HTTPONLY"] = True    # JavaScript cannot read the session cookie
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"   # cookie is not sent on cross-site POST requests
 
+# CSRF protection: every POST form must include the hidden csrf_token field.
+csrf = CSRFProtect(app)
+
+
+@app.errorhandler(CSRFError)
+def handle_csrf_error(error):
+    """Show a friendly message if a form token is missing, invalid or has expired."""
+    flash("Your form session expired or was invalid. Please try again.", "error")
+    return redirect(request.referrer or url_for("home"))
 
 def get_db():
     db = sqlite3.connect(app.config["DATABASE"])
@@ -196,7 +213,6 @@ def resources():
     term = request.args.get("q", "").strip()
     category = request.args.get("category", "").strip()
     db = get_db()
-    # Search uses parameterised LIKE values, based on the Task 1 AI snippet.
     sql = "SELECT * FROM content WHERE (title LIKE ? OR summary LIKE ?)"
     pattern = f"%{term}%"
     params = [pattern, pattern]
@@ -244,7 +260,6 @@ def plans():
         if not title or len(title) > 100 or plan_type not in ("workout", "eating") or not details:
             flash("Enter a title, choose a plan type and add some plan details.", "error")
         else:
-            # The owner ID comes from the signed-in session, not the browser form.
             db.execute(
                 "INSERT INTO plans (user_id,title,plan_type,details) VALUES (?,?,?,?)",
                 (session["user_id"], title, plan_type, details)
@@ -303,6 +318,9 @@ def report_post(post_id):
 def pricing():
     return render_template("pricing.html")
 
+@app.route("/privacy")
+def privacy():
+    return render_template("privacy.html")
 
 @app.route("/profile")
 @login_required
@@ -331,7 +349,6 @@ def demo_complete():
         return redirect(url_for("profile"))
     db = get_db()
     try:
-        # Unique(user_id, completion_id) prevents duplicate points.
         db.execute("INSERT INTO points_ledger (user_id,completion_id,points) VALUES (?,?,?)",
                    (session["user_id"], completion_id, 10))
         db.commit()
@@ -347,7 +364,7 @@ def demo_complete():
 @app.route("/upgrade-demo", methods=["POST"])
 @login_required
 def upgrade_demo():
-    # DEMO ONLY: no payment is taken. Do not use this as a real subscription process.
+    # this is just for the prototype...
     db = get_db()
     db.execute("UPDATE users SET membership_status='active' WHERE id=?", (session["user_id"],))
     db.commit()
@@ -355,7 +372,7 @@ def upgrade_demo():
     flash("Demo membership activated without payment. Replace with a real payment provider before launch.", "warning")
     return redirect(url_for("pricing"))
 
-
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    # Debug mode exposes an interactive debugger, so it is off unless TOKA_DEBUG=1 is set.
+    app.run(debug=os.environ.get("TOKA_DEBUG") == "1")

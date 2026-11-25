@@ -2,21 +2,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const larger = document.getElementById("text-larger");
   const smaller = document.getElementById("text-smaller");
+  const display = document.getElementById("text-size-display");
   const contrast = document.getElementById("contrast-toggle");
 
-  let fontSize = Number(localStorage.getItem("toka-font-size")) || 18;
+  const BASE_PX = 18;   // matches the body font-size in style.css
+  const MIN = 50;       // lowest percentage
+  const MAX = 200;      // highest percentage
+  const STEP = 25;      // change per click
+
+  let percent = Number(localStorage.getItem("toka-text-percent")) || 100;
+  percent = Math.min(Math.max(percent, MIN), MAX);
+
   const applySize = () => {
-    body.style.fontSize = `${fontSize}px`;
-    localStorage.setItem("toka-font-size", String(fontSize));
+    body.style.fontSize = `${(BASE_PX * percent) / 100}px`;
+    if (display) display.textContent = `${percent}%`;
+    if (larger) larger.disabled = percent >= MAX;
+    if (smaller) smaller.disabled = percent <= MIN;
+    localStorage.setItem("toka-text-percent", String(percent));
   };
   applySize();
 
   larger?.addEventListener("click", () => {
-    fontSize = Math.min(fontSize + 2, 26);
+    percent = Math.min(percent + STEP, MAX);
     applySize();
   });
   smaller?.addEventListener("click", () => {
-    fontSize = Math.max(fontSize - 2, 14);
+    percent = Math.max(percent - STEP, MIN);
     applySize();
   });
 

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Privacy notice{% endblock %}
+{% block content %}
+<h1>Privacy notice</h1>
+<p>ToKa Online stores only the information needed to run your account.</p>
+<ul>
+  <li>We store your username, email address and a hashed password.</li>
+  <li>We store the plans and community posts you create.</li>
+  <li>Your text size and contrast choices are saved in your own browser and are not sent to us.</li>
+</ul>
+<p>Contact us through the <a href="{{ url_for('contact') }}">contact page</a> to ask about your data.</p>
+{% endblock %}

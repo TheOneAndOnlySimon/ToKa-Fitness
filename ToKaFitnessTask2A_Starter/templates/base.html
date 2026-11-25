@@ -9,10 +9,20 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-  <header class="site-header">
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+      <header class="site-header">
+    <div class="access-tools" role="region" aria-label="Accessibility tools">
+          <div class="access-tools" role="region" aria-label="Accessibility tools">
+      <button type="button" id="text-smaller" aria-label="Decrease text size">A−</button>
+      <span id="text-size-display" class="text-size-display" aria-live="polite">100%</span>
+      <button type="button" id="text-larger" aria-label="Increase text size">A+</button>
+      <button type="button" id="contrast-toggle" aria-pressed="false">High contrast</button>
+    </div>
+    </div>
     <a class="brand" href="{{ url_for('home') }}">ToKa <span>Online</span></a>
-    <p>Fitness guidance. Healthy habits. Your progress.</p>
-  </header>
+      </header>
+
   <nav class="nav" aria-label="Main navigation">
     <a href="{{ url_for('home') }}">Dashboard</a>
     <a href="{{ url_for('resources') }}">Resources</a>
@@ -41,9 +51,7 @@
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">
-    <p>ToKa Fitness · Prototype for Task 2A</p>
-    <p><a href="{{ url_for('contact') }}">Contact</a> · Privacy notice and accessibility statement to be added</p>
-    <small>Fitness information is general guidance and is not a substitute for medical advice or supervised training.</small>
+
   </footer>
 </body>
 </html>

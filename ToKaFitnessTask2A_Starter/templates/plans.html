@@ -4,6 +4,7 @@
 <h1>My custom plans</h1>
 <p>Create a basic workout or eating plan. You can edit the details later by deleting and recreating the plan in this starter.</p>
 <form class="panel form-stack" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <h2>Create a plan</h2>
   <label for="title">Plan name</label>
   <input id="title" name="title" maxlength="100" required placeholder="e.g. My weekly routine">

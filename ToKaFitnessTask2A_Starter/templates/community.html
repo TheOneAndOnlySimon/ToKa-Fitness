@@ -4,6 +4,7 @@
 <h1>ToKa Community</h1>
 <p>Share a training update or encourage another member. Do not post private medical or personal information.</p>
 <form class="panel form-stack" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <label for="body">Your post (maximum 500 characters)</label>
   <textarea id="body" name="body" maxlength="500" rows="3" required></textarea>
   <button type="submit">Share post</button>
